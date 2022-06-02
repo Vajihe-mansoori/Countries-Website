@@ -6,17 +6,31 @@ const CountriesCard = ({ countriesData }) => {
   const searchText = (e) => {
     setSearch(e.target.value);
   };
+  console.log(countriesData.name.common);
+  let dataSearch = countriesData.filter((item) => {
+    return Object.keys(item).some((key) =>
+      item[key]
+        .toString()
+        .toLowerCase()
+        .includes(search.toString().toLowerCase())
+    );
+  });
   return (
     <>
       <div className="nav">
         <div className="search-box">
-          <input type="text" placeholder="Search" value={search} />
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={searchText.bind(this)}
+          />
         </div>
         <div className="select-box"></div>
       </div>
       <div className="container">
         {countriesData &&
-          countriesData.map((data, index) => {
+          dataSearch.map((data, index) => {
             const { flags, name, population, region, capital } = data;
             return (
               <Link
